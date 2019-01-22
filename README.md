@@ -20,29 +20,29 @@ position information of each mRNA: The steps to get this file is:
 
 #### Annotate the vcf file
 The code works in python 3. First you need to install some python packages:
-* intervaltree: Used to create a tree object to store position information of mRNA sequences.
+* intervaltree: Used to create a tree object to store position information of mRNA sequences
 * Biopython: Used to translate dna sequence to protein sequence
 * requests: Used to trace the information of Exac
 
 #### How to run this pipeline
 1. prepare the following files:
-	(a) input raw vcf file
-	(b) pref file prepared from gff3 file
-	(c) full mRNA sequence fasta file
+	(a) input raw vcf file <br />
+	(b) pref file prepared from gff3 file <br />
+	(c) full mRNA sequence fasta file <br />
 
-2. In terminal run the command;
-	python annotate.py -i input.vcf -p human_g1k_v37.pred -f human_g1k_v37.rna.fa -o anno_vcf_anno.vcf
+2. In terminal run the command:
+	**python annotate.py -i input.vcf -p human_g1k_v37.pred -f human_g1k_v37.rna.fa -o anno_vcf_anno.vcf**
 
 3. add allele frequency information:
-	python add_allele_frequency.py -i anno_vcf_anno.vcf -o anno_vcf_anno_freq.vcf
+	**python add_allele_frequency.py -i anno_vcf_anno.vcf -o anno_vcf_anno_freq.vcf**
 
 The final annotation file anno_vcf_anno_freq.vcf includes original vcf columns and the following addition columns:
-variat_type: variation type, eg: synonymous mutation
-variant_detail: details of the nucleotide change and peptide change
-normal_cov: read coverage at the mutation position for normal sample
-vaf5_cov: read coverage at the mutation position for patient sample
-normal_mut_cov: reads support mutation in normal sample
-vaf5_mut_cov: reads support mutation in patient sample    
-normal_mut_cov_percent: percentage of reads support mutation in normal sample
-vaf5_mut_cov_percent: percentage of reads support mutation in patient sample
-allele_frequency: allele frequency from ExAC database
+* variat_type: variation type, eg: synonymous mutation
+* variant_detail: details of the nucleotide change and peptide change
+* normal_cov: read coverage at the mutation position for normal sample
+* vaf5_cov: read coverage at the mutation position for patient sample
+* normal_mut_cov: reads support mutation in normal sample
+* vaf5_mut_cov: reads support mutation in patient sample    
+* normal_mut_cov_percent: percentage of reads support mutation in normal sample
+* vaf5_mut_cov_percent: percentage of reads support mutation in patient sample
+* allele_frequency: allele frequency from ExAC database
