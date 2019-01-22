@@ -34,4 +34,15 @@ The code works in python 3. First you need to install some python packages:
 	python annotate.py -i input.vcf -p human_g1k_v37.pred -f human_g1k_v37.rna.fa -o anno_vcf_anno.vcf
 
 3. add allele frequency information:
-	
+	python add_allele_frequency.py -i anno_vcf_anno.vcf -o anno_vcf_anno_freq.vcf
+
+The final annotation file anno_vcf_anno_freq.vcf includes original vcf columns and the following addition columns:
+variat_type: variation type, eg: synonymous mutation
+variant_detail: details of the nucleotide change and peptide change
+normal_cov: read coverage at the mutation position for normal sample
+vaf5_cov: read coverage at the mutation position for patient sample
+normal_mut_cov: reads support mutation in normal sample
+vaf5_mut_cov: reads support mutation in patient sample    
+normal_mut_cov_percent: percentage of reads support mutation in normal sample
+vaf5_mut_cov_percent: percentage of reads support mutation in patient sample
+allele_frequency: allele frequency from ExAC database

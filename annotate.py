@@ -395,24 +395,7 @@ def coverage_at_mutation_site(line):
     vaf5_ref_per = str(round(100 - sum(vaf5_mut_covs) / int(vaf5_cov) * 100, 2)) + '%'
     return [normal_cov, vaf5_cov, normal_mut_cov, vaf5_mut_cov, 
             normal_ref_per+','+normal_mut_per, vaf5_ref_per+','+vaf5_mut_per]
-
-
-def get_allele_freq(vcf_line):
-    '''this function retrieve exac database to get allele frequency'''
-    items = vcf_line.strip().split('\t')
-    web = 'http://exac.broadinstitute.org/variant/'
-    web += '-'.join([items[0], items[1], items[3], items[4]])
-    r = requests.get(web)
-    if '<dt>Allele Frequency</dt>' in r.text:
-        res = r.text.split('\n')
-        for i in range(len(res)):
-            if '<dt>Allele Frequency</dt>' in res[i]:
-                allele_info = res[i+1]
-                break
-        allele_freq = re.search('(?<=\>).+?(?=\<)',allele_info).group(0)
-    else:
-        allele_freq = '-'
-    return allele_freq       
+   
 
 
 
@@ -442,7 +425,8 @@ if __name__ == '__main__':
     # annotation the file
     with open(vcf_fn) as f, open(anno_vcf_fn, 'w') as out:
         out.write('\t'.join(['#CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', 'FORMAT', 'normal', 'vaf5',
-                            'normal_cov', 'vaf5_cov','normal_mut_cov','vaf5_mut_cov','normal_mut_cov_percent','vaf5_mut_cov_percent']))
+                             'variat_type','variant_detail','normal_cov', 'vaf5_cov','normal_mut_cov',
+                             'vaf5_mut_cov','normal_mut_cov_percent','vaf5_mut_cov_percent']) + '\n')
         for line in f:
             if line.startswith('#'):
                 continue
@@ -458,9 +442,8 @@ if __name__ == '__main__':
                 for a in vcf_annos:
                     types.append(a[2])
                     annos.append(':'.join(a[:2]))
-                    if annos[-1][-1] == ':': annos[-1] = annos[-1][:-1]
-                    if annos[-1][0] == ':': annos[-1] = annos[-1][1:]
-                vcf_type.append(';'.join(types))
+                    if annos[-1] == '.:.': annos[-1] = '.'
+                vcf_type.extend(types)
                 full_annotation.append(';'.join(annos))
             #------------------ Step 2 & 3 & 4: get depth of sequence coverage at he site of variation and reads support mutation
             coverage = coverage_at_mutation_site(line)

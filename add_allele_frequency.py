@@ -63,11 +63,11 @@ if __name__ == '__main__':
     with open(anno_vcf_fn) as f, open(anno_vcf_freq, 'w') as out:
         for line in f:
             if line.startswith('#'):
-                out.write(line.strip('') + '\t' + 'allele_frequency' + '\n')
+                out.write(line.strip() + '\t' + 'allele_frequency' + '\n')
                 continue
             lines = split_multi_mutations(line)
             allele = []
             for l in lines:
                 freq = get_allele_freq(l)
                 allele.append(freq)
-        out.write(line.strip() + '\t' + ','.join(allele) + '\n')   
+            out.write(line.strip() + '\t' + ','.join(allele) + '\n')   
