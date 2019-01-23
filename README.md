@@ -14,7 +14,7 @@ position information of each mRNA: The steps to get this file is:
 1. an interval tree was built using start and end position of all the mRNAs.
 2. for each variation, it checks if the mutation locates in the mRNA or not
 3. If mutation locates in the mRNA, then decide if it locates in UTR5, CDS, intron or UTR3
-4. If it locates in CDS, then further annotation if it's non synonymous or synonymouse SNV, frame shift insertion/deletion or not.
+4. If it locates in CDS, then further annotate if it's non synonymous or synonymouse SNV, frame shift insertion/deletion or not.
 5. Parse each line to extract the coverage support.
 6. Use Exac database to retrieve allele frequency information. from here
 
